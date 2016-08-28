@@ -62,4 +62,22 @@ For these and/or other purposes and motivations, and without any expectation of 
 
 ```
 
+mod API:
+
+```lua
+csh.from_node("default:wood")
+```
+
+or
+
+```lua
+csh.register_material("default:wood", {
+	subname = "wood",
+	description = node_def.description,
+	tiles = node_def.tiles,
+	groups = node_def.groups,
+	sounds = node_def.sounds
+})
+```
+
 [pithydon]: <https://github.com/pithydon>
