@@ -20,8 +20,72 @@ csh.register_material = function(craftitem, def)
 		drawtype = "mesh",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		place_param2 = 0,
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type ~= "node" then
+				return itemstack
+			end
+			local under = pointed_thing.under
+			local above = pointed_thing.above
+			local param2
+			if under.y == above.y then
+				local placer_pos = placer:getpos()
+				local dir = vector.direction(placer_pos, above)
+				local param = minetest.dir_to_facedir(dir)
+				if param == 0 then param2 = 8
+				elseif param == 1 then param2 = 16
+				elseif param == 2 then param2 = 4
+				elseif param == 3 then param2 = 12
+				end
+			elseif under.y > above.y then
+				param2 = 20
+			else
+				param2 = 0
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing, param2)
+		end,
 		mesh = "csh_cylinder.obj",
+		tiles = def.tiles,
+		groups = def.groups,
+		sounds = def.sounds
+	})
+
+	minetest.register_node(":csh:cylinderhalf_"..def.subname, {
+		description = def.description.." Pillar Slab",
+		drawtype = "mesh",
+		paramtype = "light",
+		paramtype2 = "facedir",
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type ~= "node" then
+				return itemstack
+			end
+			local under = pointed_thing.under
+			local above = pointed_thing.above
+			local param2
+			if under.y == above.y then
+				local placer_pos = placer:getpos()
+				local dir = vector.direction(placer_pos, above)
+				local param = minetest.dir_to_facedir(dir)
+				if param == 0 then param2 = 8
+				elseif param == 1 then param2 = 16
+				elseif param == 2 then param2 = 4
+				elseif param == 3 then param2 = 12
+				end
+			elseif under.y > above.y then
+				param2 = 20
+			else
+				param2 = 0
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing, param2)
+		end,
+		mesh = "csh_cylinderhalf.obj",
+		selection_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+		},
+		collision_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5}
+		},
 		tiles = def.tiles,
 		groups = def.groups,
 		sounds = def.sounds
@@ -32,7 +96,29 @@ csh.register_material = function(craftitem, def)
 		drawtype = "mesh",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		place_param2 = 0,
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type ~= "node" then
+				return itemstack
+			end
+			local under = pointed_thing.under
+			local above = pointed_thing.above
+			local param2
+			if under.y == above.y then
+				local placer_pos = placer:getpos()
+				local dir = vector.direction(placer_pos, above)
+				local param = minetest.dir_to_facedir(dir)
+				if param == 0 then param2 = 8
+				elseif param == 1 then param2 = 16
+				elseif param == 2 then param2 = 4
+				elseif param == 3 then param2 = 12
+				end
+			elseif under.y > above.y then
+				param2 = 20
+			else
+				param2 = 0
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing, param2)
+		end,
 		mesh = "csh_cylindertwo3rd.obj",
 		selection_box = {
 			type = "fixed",
@@ -52,7 +138,29 @@ csh.register_material = function(craftitem, def)
 		drawtype = "mesh",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		place_param2 = 0,
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type ~= "node" then
+				return itemstack
+			end
+			local under = pointed_thing.under
+			local above = pointed_thing.above
+			local param2
+			if under.y == above.y then
+				local placer_pos = placer:getpos()
+				local dir = vector.direction(placer_pos, above)
+				local param = minetest.dir_to_facedir(dir)
+				if param == 0 then param2 = 8
+				elseif param == 1 then param2 = 16
+				elseif param == 2 then param2 = 4
+				elseif param == 3 then param2 = 12
+				end
+			elseif under.y > above.y then
+				param2 = 20
+			else
+				param2 = 0
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing, param2)
+		end,
 		mesh = "csh_cylinder3rd.obj",
 		selection_box = {
 			type = "fixed",
@@ -74,6 +182,11 @@ csh.register_material = function(craftitem, def)
 		replacements = {
 			{"csh:grinder", "csh:grinder"}
 		}
+	})
+
+	minetest.register_craft({
+		output = "csh:cylinderhalf_"..def.subname.." 3",
+		recipe = {{"csh:cylinder_"..def.subname, "csh:cylinder_"..def.subname, "csh:cylinder_"..def.subname}}
 	})
 
 	minetest.register_craft({
@@ -107,28 +220,34 @@ csh.from_node = function(name)
 	})
 end
 
-csh.from_node("default:wood")
-csh.from_node("default:junglewood")
-csh.from_node("default:pine_wood")
-csh.from_node("default:acacia_wood")
-csh.from_node("default:aspen_wood")
-csh.from_node("default:stone")
-csh.from_node("default:cobble")
-csh.from_node("default:stonebrick")
-csh.from_node("default:desert_stone")
-csh.from_node("default:desert_cobble")
-csh.from_node("default:desert_stonebrick")
-csh.from_node("default:sandstone")
-csh.from_node("default:sandstonebrick")
-csh.from_node("default:obsidian")
-csh.from_node("default:obsidianbrick")
-csh.from_node("default:brick")
-csh.from_node("default:steelblock")
-csh.from_node("default:copperblock")
-csh.from_node("default:bronzeblock")
-csh.from_node("default:goldblock")
-csh.from_node("default:tree")
-csh.from_node("default:jungletree")
-csh.from_node("default:pine_tree")
-csh.from_node("default:acacia_tree")
-csh.from_node("default:aspen_tree")
+local default_nodes = {
+	"default:wood",
+	"default:junglewood",
+	"default:pine_wood",
+	"default:acacia_wood",
+	"default:aspen_wood",
+	"default:stone",
+	"default:cobble",
+	"default:stonebrick",
+	"default:desert_stone",
+	"default:desert_cobble",
+	"default:desert_stonebrick",
+	"default:sandstone",
+	"default:sandstonebrick",
+	"default:obsidian",
+	"default:obsidianbrick",
+	"default:brick",
+	"default:steelblock",
+	"default:copperblock",
+	"default:bronzeblock",
+	"default:goldblock",
+	"default:tree",
+	"default:jungletree",
+	"default:pine_tree",
+	"default:acacia_tree",
+	"default:aspen_tree"
+}
+
+for _,v in ipairs(default_nodes) do
+	csh.from_node(v)
+end

@@ -2,6 +2,8 @@ csh by [pithydon]
 
 Corrupt shapes for Minetest.
 
+Forum: <https://forum.minetest.net/viewtopic.php?f=11&t=15399>
+
 code license:
 
 ```txt
