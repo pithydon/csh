@@ -1,4 +1,4 @@
-csh v1.0
+csh
 
 Corrupt shapes for Minetest.
 
